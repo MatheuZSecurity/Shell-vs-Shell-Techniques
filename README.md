@@ -107,18 +107,6 @@ and so you can upload that binary on the koth machine, or even upload chattr.c o
 
 #### if you're like me and you like to troll your opponents, here are some really cool things you can use to make fun of your friends
 
-you can also add an alias, in the .bashrc of a certain machine user, for example: nano /home/user1/.bashrc, and you can put a troll alias, for example every time the opponent is typing basic linux commands : cd, ls, echo, cat, etc, and make it disconnect from the machine.
-
-> nano /home/user1/.bashrc
-
-> alias cd="exit"
-
-> alias echo="exit"
-
-> alias cat="exit"
-
-> alias ls="exit"
-
 #### For you to know who is on the machine, just use the following commands.
 
 > ps aux | grep pts
@@ -157,14 +145,6 @@ you can also add an alias, in the .bashrc of a certain machine user, for example
 you can use the following command to break into the shell of other logged in users
 
 > script -f /dev/pts/#
-
-#### If you want to kick someone out of the machine, and you kick it out, and your opponent keeps going back to the machine, create a script in bash, or you can even do it yourself in one line.
-
-> while true; do pkill -t -9 pts/#; done
-
-you can also use this to spam messages on the opponent's screen
-
-> while true; do echo trolled > /dev/pts#; done
 
 ## Note
 
