@@ -97,7 +97,7 @@ in koth, it is forbidden to change the permission of binaries, for example give 
 
 - but if you have access to a koth box and you don't have chattr you can get a chattr binary from github and compile it on the machine and use
 
-> wget https://github.com/posborne/linux-programming-interface-exercises/blob/master/15-file-attributes/chattr.c
+> wget https://raw.githubusercontent.com/posborne/linux-programming-interface-exercises/master/15-file-attributes/chattr.c
 
 > gcc chattr.c -o chattr
 
