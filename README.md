@@ -80,6 +80,7 @@ Then save and restart
 
 #### You can also remove the private key and public key from users, for example
 > rm /home/user1/.ssh/id_rsa
+
 > rm /home/user1/.ssh/id_rsa.pub
 
 #### You can also generate other ssh keys for the user
@@ -121,7 +122,9 @@ you can also add an alias, in the .bashrc of a certain machine user, for example
 #### For you to know who is on the machine, just use the following commands.
 
 > ps aux | grep pts
+
 > who
+
 > w
 
 # Nyancat
