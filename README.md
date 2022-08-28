@@ -10,11 +10,11 @@ Repository Creator
  if you have an opponent, and he is killing your session, you can become invisible in the machine, you can use this technique to hide on the machine, without needing a rootkit to hide
 
 ```
-mount -o bind /tmp /proc/PID
+mount -o bind /tmp /proc/<PID?
 
 or
 
-mount --bind /tmp/hidden /proc/$pid
+mount --bind /tmp/hidden /proc/<PID>
 
 ```
 
