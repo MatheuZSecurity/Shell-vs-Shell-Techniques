@@ -15,17 +15,10 @@ Since the "mount" command only uses the file /etc/mtab and not /proc/mounts (whi
 ```
 To hide pid:
 
-mount -o bind /tmp /proc/<PID?
-
-or
-
-mount --bind /tmp/hidden /proc/<PID>
-
-or
-
-cp /etc/mtab /x
-mount --bind /bin /proc/[pid]
-mv /x /etc/mtab
+echo $$
+cp /etc/mtab /tmp/mtab
+mount --bind /tmp /proc/[$PID]
+mv /tmp/mtab /etc/mtab
 
 ```
 
