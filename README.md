@@ -13,11 +13,15 @@ On Linux systems, process management tools like ps or top use the contents of th
 
 Since the "mount" command only uses the file /etc/mtab and not /proc/mounts (which is provided by the kernel and can't easily be spoofed), we can also hide the additional mounts by saving a backup of /etc/mtab and restoring it after doing the additional mounts: (https://www.jakoblell.com/blog/2014/05/07/hacking-contest-process-hiding-with-mount/)
 ```
+To hide pid:
+
 mount -o bind /tmp /proc/<PID?
 
 or
 
 mount --bind /tmp/hidden /proc/<PID>
+
+or
 
 cp /etc/mtab /x
 mount --bind /bin /proc/[pid]
