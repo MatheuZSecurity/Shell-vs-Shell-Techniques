@@ -8,13 +8,20 @@ Repository Creator
 # Examples
 ### Hide your PTS
  if you have an opponent, and he is killing your session, you can become invisible in the machine, you can use this technique to hide on the machine, without needing a rootkit to hide
+ 
+On Linux systems, process management tools like ps or top use the contents of the /proc directory to get a listing of all running processes and the contents of the /proc/[pid] directory for getting more information such as the process name, the command-line arguments or the user/group id of a given process. Since processes may legitimately disappear (terminate) between getting a directory listing of /proc and getting more information about the process, these tools will silently ignore empty directories in /proc. This can be exploited for hiding malicious processes by mounting something else (such as another directory with mount --bind) to /proc/[pid] to hide a given process from the system administrator. While this trick is not new and we were not the first team to use it in the Hacking Contest, we did find a new way of hiding the additional mounts from the system administrator. Typically an administrator will use the "mount" command without any parameters to get a list of all current mounts of the system. One team has already used the alias feature of the shell to manipulate the "mount" command so that it doesn't display the additional mounts inside /proc/.
 
+Since the "mount" command only uses the file /etc/mtab and not /proc/mounts (which is provided by the kernel and can't easily be spoofed), we can also hide the additional mounts by saving a backup of /etc/mtab and restoring it after doing the additional mounts: (https://www.jakoblell.com/blog/2014/05/07/hacking-contest-process-hiding-with-mount/)
 ```
 mount -o bind /tmp /proc/<PID?
 
 or
 
 mount --bind /tmp/hidden /proc/<PID>
+
+cp /etc/mtab /x
+mount --bind /bin /proc/[pid]
+mv /x /etc/mtab
 
 ```
 
