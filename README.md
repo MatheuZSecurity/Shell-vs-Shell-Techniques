@@ -13,16 +13,38 @@ On Linux systems, process management tools like ps or top use the contents of th
 
 Since the "mount" command only uses the file /etc/mtab and not /proc/mounts (which is provided by the kernel and can't easily be spoofed), we can also hide the additional mounts by saving a backup of /etc/mtab and restoring it after doing the additional mounts: (https://www.jakoblell.com/blog/2014/05/07/hacking-contest-process-hiding-with-mount/)
 ```
+
+Get PID: 
+echo $$  
+
+Get PPID:
+echo $PPID 
+
 To hide pid:
 
-echo $$
 cp /etc/mtab /tmp/mtab
 mount --bind /tmp /proc/[$PID]
+mount --bind /tmp /proc/[$PPID]
 mv /tmp/mtab /etc/mtab
 
 ```
 
-there where it is written PID, you will put your PID there, for example you can use ps aux to get the PID of your PTS, and using this command you will be invisible, and your opponent will not be able to kill your session
+There where it is written PID, you will put your PID there, for example you can use ps aux to get the PID of your PTS, and using this command you will be invisible, and your opponent will not be able to kill your session. You can hid any PID you'd like to hid here.
+
+## Find hidden mounts and detach them to view them again.
+```
+look for 
+/tmp on /proc/<PID> type non (rw,bind)
+/dev/mapper/cl-root/[/tmp]
+
+mount -l
+or
+findmnt
+
+umount /tmp
+
+*change tmp to mounted folder
+```
 
 ## Fixing vulnerabilities
 
