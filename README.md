@@ -33,17 +33,19 @@ There where it is written PID, you will put your PID there, for example you can 
 
 ### Find hidden mounts and detach them to view them again.
 ```
-look for 
-/tmp on /proc/<PID> type non (rw,bind)
-/dev/mapper/cl-root/[/tmp]
-
+Find hidden mounts:
 mount -l
 or
 findmnt
 
+look for:
+/tmp on /proc/<PID> type non (rw,bind)
+/dev/mapper/cl-root/[/tmp]
+
+Detach mount to view with w or ps aux:
 umount /tmp
 
-*change tmp to mounted folder
+*change tmp to mounted folder name
 ```
 
 ## Fixing vulnerabilities
