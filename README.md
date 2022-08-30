@@ -31,7 +31,7 @@ mv /tmp/mtab /etc/mtab
 
 There where it is written PID, you will put your PID there, for example you can use ps aux to get the PID of your PTS, and using this command you will be invisible, and your opponent will not be able to kill your session. You can hid any PID you'd like to hid here.
 
-## Find hidden mounts and detach them to view them again.
+### Find hidden mounts and detach them to view them again.
 ```
 look for 
 /tmp on /proc/<PID> type non (rw,bind)
